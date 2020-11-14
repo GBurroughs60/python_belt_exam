@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <p>Hello, {{ user.first_name }}! Create a Trip!</p>
+        <a href="/logout">Logout</a>
+    </header>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action="/create" method="post">
+        {% csrf_token %}
+        <label for="destination">Destination:</label>
+        <input type="text" name="destination" id="destination">
+        <br>
+        <label for="start_date">Start Date</label>
+        <input type="date" name="start_date" id="state_date">
+        <br>
+        <label for="end_date">End Date</label>
+        <input type="date" name="end_date" id="end_date">
+        <br>
+        <label for="plan">Plan:</label>
+        <input type="text" name="plan" id="plan">
+        <br>
+        <a href="/success">Cancel</a>
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>

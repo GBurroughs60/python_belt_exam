@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <p>Hello, {{ user.first_name }}!</p>
+        <a href="/trips/new">Create a New Trip!</a>
+        <a href="/logout">Logout</a>
+    </header>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="my_trips">
+        <h4>My trips:</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Plan</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trip in user.planned_by.all %}
+                
+                <tr>
+                    
+                    <td><a href="trips/{{trip.id}}">{{ trip.destination }}</a></td>
+                    <td>{{ trip.start_date }}</td>
+                    <td>{{ trip.end_date }}</td>
+                    <td>{{ trip.plan }}</td>
+                    {% if user.id == trip.planner.id %} 
+                        <td><a href="/trips/{{trip.id}}/delete">Remove</a> | <a href="/trips/{{trip.id}}/edit">Edit</a></td>
+                    {% else %}
+                        <td><a href="">Cancel</a></td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+                {% for trip in user.going_with.all %}
+                <tr>
+                    
+                    <td><a href="trips/{{trip.id}}">{{ trip.destination }}</a></td>
+                    <td>{{ trip.start_date }}</td>
+                    <td>{{ trip.end_date }}</td>
+                    <td>{{ trip.plan }}</td>
+                    {% if user.id == trip.planner.id %} 
+                        <td><a href="/trips/{{trip.id}}/delete">Remove</a> | <a href="/trips/{{trip.id}}/edit">Edit</a></td>
+                    {% else %}
+                        <td><a href="/trips/{{trip.id}}/cancel">Cancel</a></td>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+            
+            </tbody>
+        </table>    
+    </div>
+    <div class="all_trips">
+        <h4>Other people's trips:</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Plan</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trip in all_trips %}
+                
+                <tr>
+                    <td><a href="trips/{{trip.id}}">{{ trip.destination }}</a></td>
+                    <td>{{ trip.start_date }}</td>
+                    <td>{{ trip.end_date }}</td>
+                    <td>{{ trip.plan }}</td>
+                    <td><a href="/trips/{{trip.id}}/join">Join</a></td>
+                    
+                </tr>
+                
+                {% endfor %}
+            </tbody>
+        </table>  
+
+    </div>
+
+</body>
+
+</html>

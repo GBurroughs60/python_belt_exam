@@ -1,0 +1,33 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.register input{
+    margin: 10px;
+}
+
+#description {
+    height: 30px;
+}
+
+.login input{
+    margin: 10px;
+}
+
+.add input{
+    margin: 10px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+

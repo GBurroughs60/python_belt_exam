@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <p>Hello, {{ user.first_name }}! Let's edit your Trip!</p>
+        <a href="/logout">Logout</a>
+    </header>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form action="/trips/{{trip.id}}/update" method="post">
+        {% csrf_token %}
+        <label for="destination">Destination:</label>
+        <input type="text" name="destination" id="destination" value ='{{trip.destination}}'>
+        <br>
+        <label for="start_date">Start Date</label>
+        <input type="text" name = "start_date" value="{{new_start}}"
+                    onfocus="(this.type='date')">
+        <br>
+        <label for="end_date">End Date</label>
+        <input type="text" name = "end_date" value="{{ new_end }}"
+                    onfocus="(this.type='date')">
+        <br>
+
+        <label for="plan">Plan:</label>
+        <input type="text" name="plan" id="plan" value = '{{trip.plan}}'>
+        <br>
+        <a href="/success">Cancel</a>
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>

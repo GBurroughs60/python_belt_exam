@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Login</title>
+</head>
+
+<body>
+    <header>
+        <p>Hello, {{ user.first_name }}! Read about this trip!</p>
+        <a href="/success">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </header>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="this_trip">
+        <h4>{{ trip.destination }}</h4>
+        <p>Start Date: {{ trip.start_date }}</p>
+        <p>End Date: {{ trip.end_date }}</p>
+        <p>Created On: {{ trip.created_at }}</p>
+        <p>Last Updated: {{ trip.updated_at }}</p>
+        <p>Plan: {{ trip.plan }}</p>
+        <p>Created by: {{ trip.planner.first_name }}</p>
+    </div>
+    <hr>
+    <div class="travelers">
+        <h5>People who've joined this trip:</h5>
+        {% for user in trip.guests.all %}
+        <p> {{user.first_name}} </p>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
